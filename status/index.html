@@ -31,16 +31,23 @@
     </style>
 </head>
 <body>
-
+ 
     <div id="status-box">status: off</div>
-
+ 
     <script>
+        // Восстановить путь если был редирект через 404.html
+        const savedPath = sessionStorage.getItem('redirect');
+        if (savedPath) {
+            sessionStorage.removeItem('redirect');
+            window.history.replaceState(null, null, savedPath);
+        }
+ 
         // 1. Get the current path (e.g., "/status/knopka_on")
         const path = window.location.pathname;
-
+ 
         const statusBox = document.getElementById('status-box');
         let statusText = "off";
-
+ 
         // 2. Check if the path ends with /knopka_on
         if (path.endsWith('/knopka_on')) {
             statusText = "on";
@@ -49,23 +56,21 @@
         else if (path.endsWith('/knopka_off')) {
             statusText = "off";
         }
-
+ 
         // 4. Update Text
         statusBox.textContent = `status: ${statusText}`;
-
+ 
         // 5. Update Styles based on status
         if (statusText === 'on') {
-            // Green theme for ON
             document.body.style.backgroundColor = '#e8f5e9'; 
             statusBox.style.color = '#2e7d32';
             statusBox.style.borderColor = '#2e7d32';
         } else {
-            // Red theme for OFF
             document.body.style.backgroundColor = '#ffebee';
             statusBox.style.color = '#c62828';
             statusBox.style.borderColor = '#c62828';
         }
     </script>
-
+ 
 </body>
 </html>
