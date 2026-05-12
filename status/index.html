@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Control</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        
+        #status-box {
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 20px 40px;
+            border-radius: 10px;
+            border: 4px solid #333;
+            background-color: white;
+            text-transform: lowercase;
+            min-width: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="status-box">status: off</div>
+
+    <script>
+        // 1. Get the current path (e.g., "/status/knopka_on")
+        const path = window.location.pathname;
+
+        const statusBox = document.getElementById('status-box');
+        let statusText = "off";
+
+        // 2. Check if the path ends with /knopka_on
+        if (path.endsWith('/knopka_on')) {
+            statusText = "on";
+        } 
+        // 3. Check if the path ends with /knopka_off
+        else if (path.endsWith('/knopka_off')) {
+            statusText = "off";
+        }
+
+        // 4. Update Text
+        statusBox.textContent = `status: ${statusText}`;
+
+        // 5. Update Styles based on status
+        if (statusText === 'on') {
+            // Green theme for ON
+            document.body.style.backgroundColor = '#e8f5e9'; 
+            statusBox.style.color = '#2e7d32';
+            statusBox.style.borderColor = '#2e7d32';
+        } else {
+            // Red theme for OFF
+            document.body.style.backgroundColor = '#ffebee';
+            statusBox.style.color = '#c62828';
+            statusBox.style.borderColor = '#c62828';
+        }
+    </script>
+
+</body>
+</html>
