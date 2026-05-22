@@ -5,72 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Control</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 32px;
             height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
-            transition: background-color 0.3s ease;
+            background-color: #ffebee;
+            transition: background-color 0.4s ease;
         }
-        
+ 
         #status-box {
             font-size: 2rem;
             font-weight: bold;
             padding: 20px 40px;
             border-radius: 10px;
-            border: 4px solid #333;
+            border: 4px solid #c62828;
             background-color: white;
             text-transform: lowercase;
             min-width: 200px;
             text-align: center;
-            transition: all 0.3s ease;
+            color: #c62828;
+            transition: all 0.4s ease;
+        }
+ 
+        #toggle-btn {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 14px 36px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background-color: #c62828;
+            color: white;
+            transition: background-color 0.4s ease, transform 0.1s ease;
+        }
+ 
+        #toggle-btn:hover {
+            opacity: 0.85;
+        }
+ 
+        #toggle-btn:active {
+            transform: scale(0.97);
         }
     </style>
 </head>
 <body>
  
     <div id="status-box">status: off</div>
+    <button id="toggle-btn">Включить</button>
  
     <script>
-        // Восстановить путь если был редирект через 404.html
-        const savedPath = sessionStorage.getItem('redirect');
-        if (savedPath) {
-            sessionStorage.removeItem('redirect');
-            window.history.replaceState(null, null, savedPath);
-        }
- 
-        // 1. Get the current path (e.g., "/status/knopka_on")
-        const path = window.location.pathname;
+        let isOn = false;
  
         const statusBox = document.getElementById('status-box');
-        let statusText = "off";
+        const btn = document.getElementById('toggle-btn');
  
-        // 2. Check if the path ends with /knopka_on
-        if (path.endsWith('/knopka_on')) {
-            statusText = "on";
-        } 
-        // 3. Check if the path ends with /knopka_off
-        else if (path.endsWith('/knopka_off')) {
-            statusText = "off";
+        function updateUI() {
+            if (isOn) {
+                statusBox.textContent = 'status: on';
+                statusBox.style.color = '#2e7d32';
+                statusBox.style.borderColor = '#2e7d32';
+                document.body.style.backgroundColor = '#e8f5e9';
+                btn.style.backgroundColor = '#2e7d32';
+                btn.textContent = 'Выключить';
+            } else {
+                statusBox.textContent = 'status: off';
+                statusBox.style.color = '#c62828';
+                statusBox.style.borderColor = '#c62828';
+                document.body.style.backgroundColor = '#ffebee';
+                btn.style.backgroundColor = '#c62828';
+                btn.textContent = 'Включить';
+            }
         }
  
-        // 4. Update Text
-        statusBox.textContent = `status: ${statusText}`;
- 
-        // 5. Update Styles based on status
-        if (statusText === 'on') {
-            document.body.style.backgroundColor = '#e8f5e9'; 
-            statusBox.style.color = '#2e7d32';
-            statusBox.style.borderColor = '#2e7d32';
-        } else {
-            document.body.style.backgroundColor = '#ffebee';
-            statusBox.style.color = '#c62828';
-            statusBox.style.borderColor = '#c62828';
-        }
+        btn.addEventListener('click', () => {
+            isOn = !isOn;
+            updateUI();
+        });
     </script>
  
 </body>
 </html>
+ 
